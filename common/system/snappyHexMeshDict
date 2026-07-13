@@ -1,0 +1,163 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  version:     v2312;
+  format:      ascii;
+  class:       dictionary;
+  object:      snappyHexMeshDict;
+\*---------------------------------------------------------------------------*/
+
+castellatedMesh true;
+snap            true;
+addLayers       true;
+
+geometry
+{
+    wing.stl
+    {
+        type            triSurfaceMesh;
+        name            wing;
+    }
+    endplate.stl
+    {
+        type            triSurfaceMesh;
+        name            endplate;
+    }
+    wheel.stl
+    {
+        type            triSurfaceMesh;
+        name            wheel;
+    }
+    refinementBox
+    {
+        type            searchableBox;
+        min             (-0.1 0.0 0.0);
+        max             (2.5 0.6 0.4);
+    }
+}
+
+castellatedMeshControls
+{
+    maxLocalCells       1000000;
+    maxGlobalCells      2000000;
+    minRefinementCells  10;
+    nCellsBetweenLevels 3;
+    resolveFeatureAngle 30;
+
+    features
+    (
+        {
+            file        "wing.eMesh";
+            level       {FEAT_REF_LEVEL};
+        }
+        {
+            file        "endplate.eMesh";
+            level       {FEAT_REF_LEVEL};
+        }
+        {
+            file        "wheel.eMesh";
+            level       {FEAT_REF_LEVEL};
+        }
+    );
+
+    refinementSurfaces
+    {
+        wing
+        {
+            level       ({SURF_REF_MIN} {SURF_REF_MAX});
+            patchInfo
+            {
+                type    wall;
+            }
+        }
+        endplate
+        {
+            level       ({SURF_REF_MIN} {SURF_REF_MAX});
+            patchInfo
+            {
+                type    wall;
+            }
+        }
+        wheel
+        {
+            level       ({WHEEL_REF_MIN} {WHEEL_REF_MAX});
+            patchInfo
+            {
+                type    wall;
+            }
+        }
+    }
+
+    refinementRegions
+    {
+        refinementBox
+        {
+            mode        inside;
+            levels      ((1.0 {WAKE_REF_LEVEL}));
+        }
+    }
+
+    locationInMesh      (0.1 0.1 0.5);
+    allowFreeStandingZoneFaces true;
+}
+
+snapControls
+{
+    nSolveIter          30;
+    tolerance           2.0;
+    nSmoothPatch        3;
+    nSnapIter           5;
+}
+
+addLayersControls
+{
+    relativeSizes       true;
+    layers
+    {
+        wing
+        {
+            nSurfaceLayers 3;
+        }
+        endplate
+        {
+            nSurfaceLayers 3;
+        }
+        wheel
+        {
+            nSurfaceLayers 3;
+        }
+    }
+    expansionRatio      1.2;
+    finalLayerThickness 0.3;
+    minThickness        0.05;
+    nGrow               1;
+
+    // Advanced layer controls for stability
+    featureAngle        60;
+    slipFeatureAngle    30;
+    nRelaxIter          5;
+    nSmoothThickness    10;
+    nSmoothNormals      3;
+    nSmoothSurfaceNormals 1;
+    nBufferCellsNoExtrude 0;
+    maxFaceThicknessRatio 0.5;
+}
+
+meshQualityControls
+{
+    maxNonOrtho         65;
+    maxBoundarySkewness 20;
+    maxInternalSkewness 4;
+    maxConcave          80;
+    minVol              1e-13;
+    minTetDecimation    10%;
+    minArea             1e-13;
+    minTwist            0.02;
+    minDeterminant      0.001;
+    minFaceWeight       0.02;
+    minVolRatio         0.01;
+    
+    // Strictness settings
+    nSmoothScale        4;
+    errorReduction      0.75;
+}
+
+mergeTolerance          1e-6;

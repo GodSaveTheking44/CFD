@@ -1,0 +1,43 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  version:     v2312;
+  format:      ascii;
+  class:       dictionary;
+  object:      controlDict;
+\*---------------------------------------------------------------------------*/
+
+application     simpleFoam;
+startFrom       startTime;
+startTime       0;
+stopAt          endTime;
+endTime         500;
+deltaT          1;
+writeControl    timeStep;
+writeInterval   500;
+purgeWrite      0;
+writeFormat     ascii;
+writePrecision  6;
+writeCompression off;
+timeFormat      general;
+timePrecision   6;
+runTimeModifiable true;
+
+functions
+{
+    forceCoeffs1
+    {
+        type            forceCoeffs;
+        libs            (forces);
+        writeControl    timeStep;
+        writeInterval   1;
+        patches         (wing endplate wheel);
+        rho             rhoInf;
+        rhoInf          1.225;
+        CofR            (0.125 0.0 0.05); // Center of rotation
+        liftDir         (0 0 1);          // Lift in z-direction
+        dragDir         (1 0 0);          // Drag in x-direction
+        pitchAxis       (0 1 0);          // Pitch about y-axis
+        magUInf         30.0;             // Reference velocity
+        lRef            0.25;             // Reference length (wing chord)
+        Aref            0.0625;           // Reference area (wing chord 0.25m * span 0.25m)
+    }
+}

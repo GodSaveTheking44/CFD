@@ -1,0 +1,27 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  version:     v2312;
+  format:      ascii;
+  class:       dictionary;
+  object:      surfaceFeatureExtractDict;
+\*---------------------------------------------------------------------------*/
+
+wing.stl
+{
+    extractionMethod    extractFromSurface;
+    includedAngle       150;
+    writeObj            yes;
+}
+
+endplate.stl
+{
+    extractionMethod    extractFromSurface;
+    includedAngle       150;
+    writeObj            yes;
+}
+
+wheel.stl
+{
+    extractionMethod    extractFromSurface;
+    includedAngle       150;
+    writeObj            yes;
+}

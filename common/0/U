@@ -1,0 +1,50 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  version:     v2312;
+  format:      ascii;
+  class:       volVectorField;
+  object:      U;
+\*---------------------------------------------------------------------------*/
+
+dimensions      [0 1 -1 0 0 0 0];
+
+internalField   uniform (30 0 0);
+
+boundaryField
+{
+    inlet
+    {
+        type            fixedValue;
+        value           uniform (30 0 0);
+    }
+
+    outlet
+    {
+        type            zeroGradient;
+    }
+
+    symmetry
+    {
+        type            symmetry;
+    }
+
+    side
+    {
+        type            slip;
+    }
+
+    sky
+    {
+        type            slip;
+    }
+
+    ground
+    {
+        type            fixedValue;
+        value           uniform (30 0 0); // Moving road
+    }
+
+    "(wing|endplate|wheel)"
+    {
+        type            noSlip;
+    }
+}

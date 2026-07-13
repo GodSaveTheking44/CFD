@@ -1,0 +1,15 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  version:     v2312;
+  format:      ascii;
+  class:       dictionary;
+  object:      turbulenceProperties;
+\*---------------------------------------------------------------------------*/
+
+simulationType  ras;
+
+RAS
+{
+    RASModel        kOmegaSST;
+    turbulence      on;
+    printCoeffs     on;
+}

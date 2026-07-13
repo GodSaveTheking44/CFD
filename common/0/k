@@ -1,0 +1,51 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  version:     v2312;
+  format:      ascii;
+  class:       volScalarField;
+  object:      k;
+\*---------------------------------------------------------------------------*/
+
+dimensions      [0 2 -2 0 0 0 0];
+
+internalField   uniform 0.135;
+
+boundaryField
+{
+    inlet
+    {
+        type            fixedValue;
+        value           uniform 0.135;
+    }
+
+    outlet
+    {
+        type            zeroGradient;
+    }
+
+    symmetry
+    {
+        type            symmetry;
+    }
+
+    side
+    {
+        type            zeroGradient;
+    }
+
+    sky
+    {
+        type            zeroGradient;
+    }
+
+    ground
+    {
+        type            kqRWallFunction;
+        value           uniform 0.135;
+    }
+
+    "(wing|endplate|wheel)"
+    {
+        type            kqRWallFunction;
+        value           uniform 0.135;
+    }
+}
